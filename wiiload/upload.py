@@ -9,7 +9,7 @@ WIILOAD_VERSION_MAJOR = 0
 WIILOAD_VERSION_MINOR = 5
 
 
-async def upload(dol: bytes, argv: List[str], host: str, port: int = 4299):
+async def upload_bytes(dol: bytes, argv: List[str], host: str, port: int = 4299):
     """
     Uploads a file it to a Wii.
     :param dol: The bytes of a file to upload to wii.
@@ -55,4 +55,4 @@ async def upload_file(path: PathLike, argv: List[str], host: str, port: int = 42
     args = [os.path.basename(path)]
     args.extend(argv)
 
-    return await upload(dol, args, host, port)
+    return await upload_bytes(dol, args, host, port)
