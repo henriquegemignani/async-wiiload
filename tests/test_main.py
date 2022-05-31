@@ -5,7 +5,6 @@ from wiiload import __main__
 
 
 @pytest.mark.parametrize("from_env", [False, True])
-@pytest.mark.asyncio
 async def test_execute_args(mocker, monkeypatch, from_env):
     mock_upload_bytes = mocker.patch("wiiload.upload.upload_file", new_callable=AsyncMock)
 

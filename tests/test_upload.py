@@ -1,13 +1,11 @@
 import asyncio
 from asyncio import StreamReader
 
-import pytest
 from mock import AsyncMock
 
 from wiiload import upload
 
 
-@pytest.mark.asyncio
 async def test_upload_bytes(tmpdir):
     uploaded_data = None
     expected_data = (b'HAXX\x00\x05\x00\x08\x00\x00\x00\x0c\x00\x00\x00\x04x\x9c3426\x01\x00'
@@ -31,7 +29,6 @@ async def test_upload_bytes(tmpdir):
     assert (await uploaded_data) == expected_data
 
 
-@pytest.mark.asyncio
 async def test_upload_file(tmpdir, mocker):
     mock_upload_bytes = mocker.patch("wiiload.upload.upload_bytes", new_callable=AsyncMock)
 
