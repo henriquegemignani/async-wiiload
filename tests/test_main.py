@@ -8,7 +8,9 @@ from wiiload import __main__
 
 @pytest.mark.parametrize("from_env", [False, True])
 async def test_execute_args(mocker, monkeypatch, from_env):
-    mock_upload_bytes = mocker.patch("wiiload.upload.upload_file", new_callable=AsyncMock)
+    mock_upload_bytes = mocker.patch(
+        "wiiload.upload.upload_file", new_callable=AsyncMock
+    )
 
     args = MagicMock()
     args.dol = "foo_file"
@@ -30,7 +32,9 @@ async def test_execute_args(mocker, monkeypatch, from_env):
 @pytest.mark.parametrize("missing", [False, True])
 def test_get_wii_from_env_fail(monkeypatch, missing):
     if missing:
-        expected_msg = '--wii not specified, and WIILOAD environment variable is missing'
+        expected_msg = (
+            "--wii not specified, and WIILOAD environment variable is missing"
+        )
         monkeypatch.delenv("WIILOAD", raising=False)
     else:
         expected_msg = "does not start with"
