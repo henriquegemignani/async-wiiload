@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          submodules: 'recursive'
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,7 +28,7 @@ jobs:
         run: python -m pip install build
 
       - name: Build Packages
-        run: python -m build
+        run: PYTHONWARNINGS=error python -m build
 
       - name: Store the packages
         uses: actions/upload-artifact@v3
@@ -60,14 +61,10 @@ jobs:
         with:
           name: python-package-distributions
           path: dist/
-          
-      - name: Glob match
-        id: glob
-        run: echo ::set-output name=wheel::$(ls dist/*.whl)
-        shell: bash
 
       - name: Install built wheel
-        run: python -m pip install "${{ steps.glob.outputs.wheel }}[test]" -c requirements.txt
+        run: python -m pip install "$(ls dist/*.whl)[test]" -c requirements.txt
+        shell: bash
 
       - name: run pytest
         run: python -m pytest --cov
@@ -91,13 +88,13 @@ jobs:
 
       - name: Publish 📦 to TestPyPI
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.testpypi_password }}
           repository_url: https://test.pypi.org/legacy/
       
       - name: Publish 📦 to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.pypi_password }}
