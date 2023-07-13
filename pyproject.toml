@@ -37,7 +37,6 @@ test = [
     "pytest-cov",
     "pytest-asyncio",
     "pytest-mock",
-    "mock>=4.0",
 ]
 
 [tool.setuptools_scm]
@@ -48,3 +47,26 @@ git_describe_command = "git describe --dirty --tags --long --match v[0-9]*"
 [tool.pytest.ini_options]
 minversion = "6.0"
 asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 120
+select = [
+    "E", "F", "W", "C90", "I", "UP", "C4",
+    "RSE",
+    "TCH",
+    "PTH",
+    "COM818", "COM819",
+    "ISC",
+    "PIE",
+
+    "PLC",
+    "PLE",
+    "PLR",
+    "PLW",
+]
+
+# Version to target for generated code.
+target-version = "py38"
+
+[tool.ruff.isort]
+required-imports = ["from __future__ import annotations"]

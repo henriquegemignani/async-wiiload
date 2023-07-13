@@ -1,8 +1,7 @@
-import asyncio
-from asyncio import StreamReader
-import io
+from __future__ import annotations
 
-from mock import AsyncMock, MagicMock
+import io
+from unittest.mock import AsyncMock, MagicMock
 
 from wiiload import upload
 
