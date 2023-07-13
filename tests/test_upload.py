@@ -1,39 +1,39 @@
 import asyncio
 from asyncio import StreamReader
+import io
 
-from mock import AsyncMock
+from mock import AsyncMock, MagicMock
 
 from wiiload import upload
 
 
-async def test_upload_bytes(tmpdir):
-    uploaded_data = None
+async def test_upload_bytes(unused_tcp_port, mocker):
+    result = io.BytesIO()
+
+    reader = AsyncMock()
+    writer = AsyncMock()
+    writer.write = result.write
+    writer.close = MagicMock()
+    mock_open_connection = mocker.patch("asyncio.open_connection", new_callable=AsyncMock,
+                                        return_value=(reader, writer))
+
     expected_data = (b'HAXX\x00\x05\x00\x08\x00\x00\x00\x0c\x00\x00\x00\x04x\x9c3426\x01\x00'
                      b'\x01\xf8\x00\xcbme\x00that\x00')
 
-    def client_connected_cb(reader: StreamReader, writer):
-        nonlocal uploaded_data
-        uploaded_data = reader.read()
+    await upload.upload_bytes(b"1234", ["me", "that"], "localhost", unused_tcp_port)
+    assert result.getvalue() == expected_data
 
-    result = await asyncio.start_server(client_connected_cb, host="localhost")
-
-    host, port = (None, None)
-    for sock in result.sockets:
-        addr = sock.getsockname()
-        if len(addr) >= 2:
-            host, port = addr[0:2]
-            break
-
-    await upload.upload_bytes(b"1234", ["me", "that"], host, port)
-    assert uploaded_data is not None
-    assert (await uploaded_data) == expected_data
+    mock_open_connection.assert_awaited_once_with("localhost", unused_tcp_port)
+    writer.drain.assert_awaited_once_with()
+    writer.close.assert_called_once_with()
+    writer.wait_closed.assert_awaited_once_with()
 
 
-async def test_upload_file(tmpdir, mocker):
+async def test_upload_file(tmp_path, mocker):
     mock_upload_bytes = mocker.patch("wiiload.upload.upload_bytes", new_callable=AsyncMock)
 
-    path = tmpdir.join("somewhere.bin")
-    path.write_binary(b"foobar")
+    path = tmp_path.joinpath("somewhere.bin")
+    path.write_bytes(b"foobar")
 
     # Run
     await upload.upload_file(path, ["foo"], "localhost")
