@@ -1,10 +1,52 @@
 [build-system]
 requires = [
-    "setuptools>=58.0.0",
-    "setuptools_scm>=3.4.3",
-    "wheel>=0.37.0",
+    "setuptools>=61.2",
+    "setuptools_scm[toml]>=3.4.3",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "async-wiiload"
+authors = [{name = "Henrique Gemignani Passos Lima"}]
+description = library for sending executables to Wii's Homebrew Channel"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.7"
+dynamic = ["version"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/henriquegemignani/async-wiiload"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-asyncio",
+    "pytest-mock",
+    "mock>=4.0",
+]
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+
+[tool.setuptools_scm]
+local_scheme = "no-local-version"
+write_to = "src/wiiload/version.py"
+git_describe_command = "git describe --dirty --tags --long --match v[0-9]*"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
