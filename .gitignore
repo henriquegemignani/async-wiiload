@@ -132,4 +132,4 @@ dmypy.json
 /.idea
 
 # Project files
-/wiiload/version.py
+/src/wiiload/version.py
