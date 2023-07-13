@@ -10,8 +10,11 @@ from wiiload import upload
 
 def create_parser():
     parser = argparse.ArgumentParser("wiiload")
-    parser.add_argument("--wii", help="The hostname of the Wii to upload to. "
-                                      "Defaults to using the WIILOAD environment variable.")
+    parser.add_argument(
+        "--wii",
+        help="The hostname of the Wii to upload to. "
+        "Defaults to using the WIILOAD environment variable.",
+    )
     parser.add_argument("dol", type=Path, help="Path to the dol to upload.")
     parser.add_argument("rest", nargs=argparse.REMAINDER)
     return parser
@@ -20,12 +23,16 @@ def create_parser():
 def get_wii_from_env():
     wiiload_env = os.getenv("WIILOAD")
     if wiiload_env is None:
-        raise RuntimeError("--wii not specified, and WIILOAD environment variable is missing")
+        raise RuntimeError(
+            "--wii not specified, and WIILOAD environment variable is missing"
+        )
 
     if wiiload_env.startswith("tcp:"):
         return wiiload_env[4:]
     else:
-        raise RuntimeError(f"WIILOAD environment variable ({wiiload_env}) does not start with `tcp:`")
+        raise RuntimeError(
+            f"WIILOAD environment variable ({wiiload_env}) does not start with `tcp:`"
+        )
 
 
 async def execute_args(args):
@@ -40,5 +47,5 @@ async def main():
     await execute_args(args)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())
