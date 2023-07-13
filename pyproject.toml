@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 requires-python = ">=3.7"
+license = {file = "LICENSE"}
 dynamic = ["version"]
 
 [project.readme]
@@ -39,9 +40,6 @@ test = [
     "pytest-mock",
     "mock>=4.0",
 ]
-
-[tool.setuptools]
-license-files = ["LICENSE"]
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
