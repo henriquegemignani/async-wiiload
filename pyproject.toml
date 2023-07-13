@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "async-wiiload"
 authors = [{name = "Henrique Gemignani Passos Lima"}]
-description = library for sending executables to Wii's Homebrew Channel"
+description = "library for sending executables to Wii's Homebrew Channel"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
