@@ -3,7 +3,7 @@ from __future__ import annotations
 import io
 from unittest.mock import AsyncMock, MagicMock
 
-from wiiload import upload
+import wiiload
 
 
 async def test_upload_bytes(unused_tcp_port, mocker):
@@ -22,7 +22,7 @@ async def test_upload_bytes(unused_tcp_port, mocker):
         b"\x01\xf8\x00\xcbme\x00that\x00"
     )
 
-    await upload.upload_bytes(b"1234", ["me", "that"], "localhost", unused_tcp_port)
+    await wiiload.upload_bytes(b"1234", ["me", "that"], "localhost", unused_tcp_port)
     assert result.getvalue() == expected_data
 
     mock_open_connection.assert_awaited_once_with("localhost", unused_tcp_port)
@@ -40,7 +40,7 @@ async def test_upload_file(tmp_path, mocker):
     path.write_bytes(b"foobar")
 
     # Run
-    await upload.upload_file(path, ["foo"], "localhost")
+    await wiiload.upload_file(path, ["foo"], "localhost")
 
     # Assert
     mock_upload_bytes.assert_awaited_once_with(
