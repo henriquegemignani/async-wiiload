@@ -48,6 +48,11 @@ git_describe_command = "git describe --dirty --tags --long --match v[0-9]*"
 [tool.pytest.ini_options]
 minversion = "6.0"
 asyncio_mode = "auto"
+xfail_strict = true
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+]
 
 [tool.ruff]
 line-length = 120
@@ -71,3 +76,7 @@ target-version = "py38"
 
 [tool.ruff.isort]
 required-imports = ["from __future__ import annotations"]
+
+[tool.black]
+line-length = 120
+target-version = ['py38', 'py39', 'py310', 'py311']
