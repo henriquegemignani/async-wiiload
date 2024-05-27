@@ -1,5 +1,5 @@
 colorama==0.4.6
-coverage==7.5.1
+coverage==7.5.2
 exceptiongroup==1.2.1
 iniconfig==2.0.0
 mock==5.1.0
