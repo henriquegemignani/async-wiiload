@@ -42,7 +42,7 @@ test = [
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
 write_to = "src/wiiload/version.py"
-git_describe_command = "git describe --dirty --tags --long --match v[0-9]*"
+scm.git.describe_command = "git describe --dirty --tags --long --match v[0-9]*"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -55,7 +55,6 @@ filterwarnings = [
 
 [tool.ruff]
 line-length = 120
-target-version = "py39"
 src = ["src"]
 
 [tool.ruff.lint]
