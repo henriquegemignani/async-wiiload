@@ -9,8 +9,7 @@ See Wiibrew's [Wiiload](http://wiibrew.org/wiki/Wiiload) for more details.
 ## Usage
 
 ```python
-
 import wiiload
-await wiiload.upload_file("homebrew.dol", [], "192.168.1.2")
 
+await wiiload.upload_file("homebrew.dol", [], "192.168.1.2")
 ```
